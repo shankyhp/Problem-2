@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Api Manage</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>Random User</h1>
+    <button id="add">Add Record</button>
+    <table id="datatable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>Country</th>
+          <th>Pictures</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      </table>
+
+      <script>
+        async function fetchRandomUser() {
+          const response = await fetch("https://randomuser.me/api/");
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.log("Failed To load data from the respective api");
+
+            return null;
+          }
+        }
+
+        async function addRecord() {
+          const userData = await fetchRandomUser();
+          if (userData) {
+            const user = userData.results[0];
+            const tableBody = document.querySelector("#datatable tbody");
+
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${user.name.first} ${user.name.last}</td>
+                <td>${user.email}</td>
+                 <td>${user.gender}</td>
+                 <td>${user.location.country}</td>
+                 <td><img src="${user.picture.medium}" width="50"</td>
+                 <td><button class= "deletebutton" >Delete</button></td>`;
+
+            row
+              .querySelector(".deletebutton")
+              .addEventListener("Click", function () {
+                row.remove();
+              });
+
+            tableBody.appendChild(row);
+          }
+        }
+
+        document.getElementById("add").addEventListener("Click", addRecord);
+      </script>
+    </table>
+  </body>
+</html>
