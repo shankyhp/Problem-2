@@ -30,7 +30,7 @@
           if (response.ok) {
             return response.json();
           } else {
-            console.log("Failed To load data from the respective api");
+            console.error("Failed To load data from the respective api");
 
             return null;
           }
@@ -52,7 +52,7 @@
 
             row
               .querySelector(".deletebutton")
-              .addEventListener("Click", function () {
+              .addEventListener("click", function () {
                 row.remove();
               });
 
@@ -60,7 +60,7 @@
           }
         }
 
-        document.getElementById("add").addEventListener("Click", addRecord);
+        document.getElementById("add").addEventListener("click", addRecord);
       </script>
     </table>
   </body>
